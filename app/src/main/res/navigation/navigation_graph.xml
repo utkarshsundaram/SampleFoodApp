@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/receipeListFragment">
+
+    <fragment
+        android:id="@+id/receipeListFragment"
+        android:name="com.example.samplefoodapp.presentation.ui.receipelist.ReceipeListFragment"
+        android:label="ReceipeListFragment" >
+        <action
+            android:id="@+id/action_receipeListFragment_to_receipeDetailFragment"
+            app:destination="@id/receipeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/receipeDetailFragment"
+        android:name="com.example.samplefoodapp.presentation.ui.receipe.ReceipeDetailFragment"
+        android:label="ReceipeDetailFragment" >
+        <action
+            android:id="@+id/action_receipeDetailFragment_to_receipeListFragment"
+            app:destination="@id/receipeListFragment" />
+    </fragment>
+</navigation>
