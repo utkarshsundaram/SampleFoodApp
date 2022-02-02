@@ -34,6 +34,7 @@ fun ReceipeDetailScreen(receipeList: ReceipeList){
         lazyListState,
     ) {
         item {
+            //The children of the Box layout will be stacked over each other(Frame layout equivvalent)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -66,9 +67,17 @@ fun ReceipeDetailScreen(receipeList: ReceipeList){
                         .background(Color.White)
                         .fillMaxWidth()
                         .padding(20.dp),
-                       style = MaterialTheme.typography.h3
+                       style = MaterialTheme.typography.h5
                 )
             }
+            Text(
+                text = "How to make It ?",
+                Modifier
+                    .background(Color.White)
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                style = MaterialTheme.typography.h5
+            )
 
         }
 
@@ -78,7 +87,7 @@ fun ReceipeDetailScreen(receipeList: ReceipeList){
                 Modifier
                     .background(Color.White)
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(20.dp)
             )
         }
     }

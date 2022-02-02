@@ -11,6 +11,7 @@ import com.example.samplefoodapp.commonutils.FoodCategories
 import com.example.samplefoodapp.commonutils.getFoodCategory
 import com.example.samplefoodapp.domain.model.ReceipeList
 import com.example.samplefoodapp.domain.network.repository.RecipeRepository
+import com.example.samplefoodapp.presentation.ui.application.BaseApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,7 +19,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltViewModel
-class ReceipeListViewModel @Inject constructor(private  val repository: RecipeRepository,
+class ReceipeListViewModel @Inject constructor(val mApplication: BaseApplication,private  val repository: RecipeRepository,
                                                @Named("auth_token")private val token:String):ViewModel() {
 
 
@@ -28,47 +29,60 @@ class ReceipeListViewModel @Inject constructor(private  val repository: RecipeRe
     val selectedCategory: MutableState<FoodCategories?> = mutableStateOf(null)
     var categoriesScrollPosition:Float= 0.0F
     var loadingProgressBar= mutableStateOf(false)
-    var pageNo:Int=1;
+    var pageNo:Int=1
+    val showSnackBar= mutableStateOf(false)
     val receipeId= mutableStateOf(1)
 
     init {
         newSearch()
     }
-    fun newSearch(){
+    fun newSearch() {
+        if (mApplication.isNetworkAvailable()) {
+            viewModelScope.launch {
+                loadingProgressBar.value = true
+                showSnackBar.value=true
+                delay(1000)
+                resetSearchState()
+                val result = repository.search(
+                    token = token,
+                    page = pageNo,
+                    query = queries.value
+                )
+                recipes.value = result
+                loadingProgressBar.value = false
+                Log.d(TAG, recipes.toString())
+            }
+        }else{
+            loadingProgressBar.value = false
+            showSnackBar.value=true
 
-        viewModelScope.launch {
-            loadingProgressBar.value=true
-            delay(1000)
-            resetSearchState()
-            val result = repository.search(
-                token = token,
-                page = pageNo,
-                query = queries.value
-            )
-            recipes.value = result
-            loadingProgressBar.value=false
-            Log.d(TAG,recipes.toString())
         }
     }
 
-    fun nextPage(){
-        viewModelScope.launch {
-            if((categoriesScrollPosition+1)>=(pageNo*PAGE_SIZE)){
-               loadingProgressBar.value=true
-                incrementPageNo()
-                delay(1000)
-                if(pageNo>1){
-                    val result = repository.search(
-                        token = token,
-                        page = pageNo,
-                        query = queries.value
-                    )
-                    Log.d(TAG,"next page:{$result}")
-                    appendCurrentList(result)
-                    loadingProgressBar.value=false
+    fun nextPage() {
+        if (mApplication.isNetworkAvailable()) {
+            viewModelScope.launch {
+                if ((categoriesScrollPosition + 1) >= (pageNo * PAGE_SIZE)) {
+                    loadingProgressBar.value = true
+                    incrementPageNo()
+                    delay(1000)
+                    if (pageNo > 1) {
+                        val result = repository.search(
+                            token = token,
+                            page = pageNo,
+                            query = queries.value
+                        )
+                        Log.d(TAG, "next page:{$result}")
+                        appendCurrentList(result)
+                        loadingProgressBar.value = false
 
+                    }
                 }
             }
+        }else{
+            loadingProgressBar.value = false
+            showSnackBar.value=true
+
         }
     }
     private fun resetSearchState(){

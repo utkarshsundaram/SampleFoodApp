@@ -1,7 +1,12 @@
 package com.example.samplefoodapp.presentation.ui.component
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ScaffoldState
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -44,8 +49,22 @@ constructor(
                 cancelActiveJob()
             }
         }
-    }
 
+    }
+    @Composable
+    fun SnackbarScreen() {
+        val scope = rememberCoroutineScope()
+        val snackbarHostState = remember { SnackbarHostState() }
+
+            Row(){
+
+                    //Important part here
+                    scope.launch {
+                        snackbarHostState.showSnackbar("Hello there")
+                    }
+                    //
+                }
+    }
     private fun cancelActiveJob(){
         snackbarJob?.let { job ->
             job.cancel()

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SampleFoodApp</string>
+    <string name="network_error">Network Error Occurred Please Try Again</string>
+    <string name="hide">Hide</string>
 </resources>

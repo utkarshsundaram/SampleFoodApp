@@ -14,12 +14,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @HiltViewModel
-class ReceipeDetailsViewModel@Inject constructor(private  val repository: RecipeRepository,
+class ReceipeDetailsViewModel@Inject constructor(val mApplication: BaseApplication,private  val repository: RecipeRepository,
                                                  @Named("auth_token")private val token:String):
     ViewModel()
 {
-    @Inject
-    lateinit var mApplication: BaseApplication
+
 
     var receipeId= mutableStateOf(1)
 

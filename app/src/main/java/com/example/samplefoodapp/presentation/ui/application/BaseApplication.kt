@@ -26,7 +26,15 @@ class BaseApplication:Application() {
      fun isNetworkAvailable(): Boolean {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+
+         val allNetworks = connectivityManager?.allNetworks?.let { it } ?: return false
+
+         allNetworks.forEach { network ->
+             val info = connectivityManager.getNetworkInfo(network)
+             if (info?.state == NetworkInfo.State.CONNECTED) return true
+         }
+         return false
     }
-}
+       // val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        // return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+    }

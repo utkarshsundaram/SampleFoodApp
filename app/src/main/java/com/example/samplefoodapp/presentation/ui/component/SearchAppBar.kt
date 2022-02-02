@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
@@ -302,6 +303,88 @@ fun GenerateSearchAppBar(queries: String,onQueryChanged: (String) -> Unit,
 ////            }
 ////
 ////        }
+    // Another way to inflate search app bar Replaced by Search App bar class
+//    @ExperimentalComposeUiApi
+//    @Composable
+//    fun GetSearchBar() {
+//        val keyboardController = LocalSoftwareKeyboardController.current
+//
+//
+//        TextField(value = viewModel.queries.value,
+//            onValueChange = {
+//                viewModel.onQueriesChanged(it)
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth(.9f)
+//                .padding(8.dp),
+//            label = {
+//                Text(text = "Search")
+//            },
+//            keyboardOptions = KeyboardOptions(
+//                keyboardType = KeyboardType.Text,
+//                imeAction = ImeAction.Done
+//            ),
+//            leadingIcon = {
+//                Icon(
+//                    bitmap = ImageBitmap.imageResource(id = R.drawable.search_icon),
+//                    contentDescription = "SearchIcon"
+//                )
+//            },
+//            keyboardActions = KeyboardActions(onDone = {
+//                viewModel.newSearch()
+//                keyboardController?.hide()
+//            }),
+//            textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+//            maxLines = 1,
+//            singleLine = true,
+//            colors = TextFieldDefaults.textFieldColors(
+//                focusedIndicatorColor = Color.Transparent,
+//                disabledIndicatorColor = Color.Transparent,
+//                unfocusedIndicatorColor = Color.Transparent,
+//                backgroundColor = MaterialTheme.colors.surface,
+//            )
+//
+//        )
+//
+//
+//    }
+
+//    //Sample Bottom Bar generator
+//    @Composable
+//    fun MyBottomBar() {
+//        BottomNavigation(
+//            elevation = 12.dp
+//        ) {
+//            BottomNavigationItem(
+//                icon = { Icons.Default.Favorite },
+//                selected = false,
+//                onClick = {}
+//            )
+//            BottomNavigationItem(
+//                icon = { Icons.Default.MoreVert },
+//                selected = true,
+//                onClick = {}
+//            )
+//            BottomNavigationItem(
+//                icon = { Icons.Default.Add },
+//                selected = false,
+//                onClick = {}
+//            )
+//        }
+//    }
+//
+//
+//    @Composable
+//    fun MyDrawer() {
+//        Column() {
+//            Text(text = "Item1")
+//            Text(text = "Item2")
+//            Text(text = "Item3")
+//            Text(text = "Item4")
+//            Text(text = "Item5")
+//        }
+//
+//    }
 
 }
 
